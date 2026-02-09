@@ -336,19 +336,19 @@ class _LiveStreamViewState extends State<LiveStreamView> {
             const Center(
               child: CircularProgressIndicator(),
             ),
-          // Fullscreen button - bottom right
-          Positioned(
-            bottom: 12,
-            right: 12,
-            child: IconButton(
-                onPressed: _openFullscreen,
-                icon: SvgPicture.asset(
-                  'assets/svgs/fullscreen.svg',
-                  width: 32,
-                  height: 32,
-                ),
-            ),
-          ),
+          // // Fullscreen button - bottom right
+          // Positioned(
+          //   bottom: 12,
+          //   right: 12,
+          //   child: IconButton(
+          //       onPressed: _openFullscreen,
+          //       icon: SvgPicture.asset(
+          //         'assets/svgs/fullscreen.svg',
+          //         width: 32,
+          //         height: 32,
+          //       ),
+          //   ),
+          // ),
         ],
       ),
     );

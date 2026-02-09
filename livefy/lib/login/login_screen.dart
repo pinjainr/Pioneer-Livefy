@@ -86,7 +86,7 @@ class ToyotaBrandingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final safeAreaTop = MediaQuery.of(context).padding.top;
-    final brandingHeight = (screenHeight - safeAreaTop) * 0.33;
+    final brandingHeight = (screenHeight - safeAreaTop) * 0.30;
 
     return Container(
       width: double.infinity,
@@ -107,8 +107,8 @@ class ToyotaBrandingSection extends StatelessWidget {
           Center(
             child: Image.asset(
               'assets/images/toyota_login_logo.png',
-              width: 80,
-              height: 80,
+              width: 90,
+              height: 90,
               fit: BoxFit.contain,
             ),
           ),
@@ -137,7 +137,7 @@ class LoginFormSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final safeAreaTop = MediaQuery.of(context).padding.top;
-    final brandingHeight = (screenHeight - safeAreaTop) * 0.33;
+    final brandingHeight = (screenHeight - safeAreaTop) * 0.30;
 
     return Positioned(
       top: brandingHeight - 30, // Overlap by 30 pixels

@@ -27,12 +27,12 @@ class CustomDrawer extends StatelessWidget {
             children: [
               // Header with Toyota logo and close button
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(
-                      'assets/images/toyota_titile_nav_log.png',
+                    SvgPicture.asset(
+                      'assets/svgs/toyota.svg',
                       height: 30,
                     ),
 
@@ -41,8 +41,8 @@ class CustomDrawer extends StatelessWidget {
                       onPressed: onClose,
                       icon: SvgPicture.asset(
                         'assets/svgs/cross.svg',
-                        width: 24,
-                        height: 24,
+                        width: 35,
+                        height: 35,
                       ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(

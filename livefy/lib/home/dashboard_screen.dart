@@ -59,7 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         elevation: 0,
         leading: Builder(
           builder: (context) => Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(10.0),
             child: IconButton(
               icon: SvgPicture.asset('assets/svgs/menu.svg'),
               onPressed: () => Scaffold.of(context).openDrawer(),
@@ -69,10 +69,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         centerTitle: true,
-        title: Image.asset('assets/images/toyota_titile_nav_log.png', width: 110, height: 30,),
+        title: SvgPicture.asset('assets/svgs/toyota.svg', width: 110, height: 30,),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(10.0),
             child: Stack(
               children: [
                 IconButton(
