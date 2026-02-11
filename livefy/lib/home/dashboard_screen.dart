@@ -33,7 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     try {
       final events = await ApiService.fetchRecentEvents(
-        deviceId: '000000000005005',
+        deviceId: '866693080014181',
         tenantId: '35c79fed-3785-4d26-bbce-ce8b05972acb',
       );
       setState(() {

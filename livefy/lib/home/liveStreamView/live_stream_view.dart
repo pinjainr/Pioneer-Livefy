@@ -5,10 +5,12 @@ import 'fullscreen_stream_view.dart';
 
 class LiveStreamView extends StatefulWidget {
   final String streamUrl;
+  final VoidCallback toggleCameraCallback;
 
   const LiveStreamView({
     super.key,
     required this.streamUrl,
+    required this.toggleCameraCallback
   });
 
   @override
@@ -25,6 +27,31 @@ class _LiveStreamViewState extends State<LiveStreamView> {
   void initState() {
     super.initState();
     _initializeWebView();
+  }
+
+  @override
+  void didUpdateWidget(LiveStreamView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.streamUrl != widget.streamUrl) {
+      _loadUrl(widget.streamUrl);
+    }
+  }
+
+  /// Load a new URL in the existing controller (used when toggling camera).
+  void _loadUrl(String url) async {
+    if (!mounted) return;
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+    try {
+      await controller.clearCache();
+      await controller.clearLocalStorage();
+    } catch (e) {
+      print("Error clearing cache when switching URL: $e");
+    }
+    if (!mounted) return;
+    controller.loadRequest(Uri.parse(url));
   }
 
   void _initializeWebView() async {
@@ -336,6 +363,20 @@ class _LiveStreamViewState extends State<LiveStreamView> {
             const Center(
               child: CircularProgressIndicator(),
             ),
+          // Toggle Camera button - bottom left
+          Positioned(
+            bottom: 12,
+            left: 16,
+            child: IconButton(
+                onPressed: widget.toggleCameraCallback,
+                icon: SvgPicture.asset(
+                  'assets/svgs/toggleCam.svg',
+                  width: 32,
+                  height: 32,
+                ),
+            ),
+          ),
+
           // // Fullscreen button - bottom right
           // Positioned(
           //   bottom: 12,

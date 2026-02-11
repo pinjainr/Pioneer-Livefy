@@ -14,6 +14,20 @@ class _LiveMonitoringSection extends State<LiveMonitoringSection> {
   bool isPlaying = false;
   bool isFront = true;
 
+  void toggleCamera() {
+    setState(() {
+      isFront = !isFront;
+    });
+
+    if (isFront) {
+      print("Font camera selected.");
+      // start player
+    } else {
+      print("Cabin camera selected.");
+      // pause player
+    }
+  }
+
   void togglePlay() {
     setState(() {
       isPlaying = !isPlaying;
@@ -36,7 +50,7 @@ class _LiveMonitoringSection extends State<LiveMonitoringSection> {
     final availableHeight = screenHeight - safeAreaTop - appBarHeight;
     final sectionHeight = availableHeight * 0.25;
 
-    var whepUrl = "http://13.202.239.228:8889/front"; //isFront ? "http://13.202.239.228:8889/front" : "http://13.202.239.228:8889/cabin/";
+    var whepUrl = isFront ? "http://13.202.239.228:8889/front" : "http://13.202.239.228:8889/cabin/";
 
     return GestureDetector(
       onTap: () {
@@ -50,7 +64,7 @@ class _LiveMonitoringSection extends State<LiveMonitoringSection> {
       child: Container(
         height: sectionHeight,
         child: Center(
-          child: isPlaying ? LiveStreamView(streamUrl: whepUrl) : LiveMonitoringSectionCard(onTapStream: togglePlay,),
+          child: isPlaying ? LiveStreamView(streamUrl: whepUrl, toggleCameraCallback: toggleCamera) : LiveMonitoringSectionCard(onTapStream: togglePlay,),
         ),
       ),
     );
