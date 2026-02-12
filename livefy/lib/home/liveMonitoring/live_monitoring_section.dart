@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../streaming_screen.dart';
 import '../liveStreamView/live_stream_view.dart';
 
@@ -86,6 +87,7 @@ class LiveMonitoringSectionCard extends StatelessWidget {
     final appBarHeight = AppBar().preferredSize.height;
     final availableHeight = screenHeight - safeAreaTop - appBarHeight;
     final sectionHeight = availableHeight * 0.25;
+    final l10n = AppLocalizations.of(context)!;
 
     return GestureDetector(
       onTap: onTapStream,
@@ -102,8 +104,7 @@ class LiveMonitoringSectionCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Tap to start live monitoring',
+              Text(l10n.startLiveMonitoring,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,

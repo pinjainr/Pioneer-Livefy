@@ -1,0 +1,17 @@
+{
+  "appTitle": "Livefy",
+  "invalidCred": "Invalid username or password",
+  "login": "Login",
+  "loginTitleMsg": "Enter your details to login",
+  "userNameTitle": "User Name*",
+  "userNameHint": "Enter your username",
+  "userNameErr": "Please enter your username",
+  "passwordTitle": "Password*",
+  "passwordHint": "Enter your password",
+  "passwordErr": "Please enter your password",
+  "recentEvents": "Recent Events",
+  "errInLoadingEvents": "Error loading events",
+  "retry": "Retry",
+  "startLiveMonitoring": "Tap to start live monitoring",
+  "errorInFullScreen": "Error opening fullscreen:"
+}

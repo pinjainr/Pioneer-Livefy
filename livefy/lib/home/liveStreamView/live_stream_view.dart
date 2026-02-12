@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'fullscreen_stream_view.dart';
 
 class LiveStreamView extends StatefulWidget {
@@ -275,8 +278,9 @@ class _LiveStreamViewState extends State<LiveStreamView> {
       print("Error opening fullscreen: $e");
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error opening fullscreen: $e'),
+
+        SnackBar(
+            content: Text('${AppLocalizations.of(context)?.errorInFullScreen} $e'),
             duration: const Duration(seconds: 2),
           ),
         );
