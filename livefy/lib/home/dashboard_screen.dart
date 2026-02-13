@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../streaming_screen.dart';
 import '../drawer/custom_drawer.dart';
 import 'liveMonitoring/live_monitoring_section.dart';
@@ -33,7 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     try {
       final events = await ApiService.fetchRecentEvents(
-        deviceId: '000000000005005',
+        deviceId: '866693080014181',
         tenantId: '35c79fed-3785-4d26-bbce-ce8b05972acb',
       );
       setState(() {
@@ -52,6 +53,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -162,8 +165,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           child: Row(
                             children: [
-                              const Text(
-                                'Recent Events',
+                              Text(
+                                l10n.recentEvents,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -204,7 +207,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Error loading events',
+                                            l10n.errInLoadingEvents,
                                             style: TextStyle(
                                               color: Colors.grey.shade600,
                                             ),
@@ -212,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           const SizedBox(height: 8),
                                           ElevatedButton(
                                             onPressed: _fetchRecentEvents,
-                                            child: const Text('Retry'),
+                                            child: Text(l10n.retry),
                                           ),
                                         ],
                                       ),

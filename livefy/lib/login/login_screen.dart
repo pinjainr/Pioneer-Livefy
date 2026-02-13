@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../home/dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         // Failed login
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Invalid username or password'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)?.invalidCred ?? 'Invalid credentials'),
             backgroundColor: Colors.red,
           ),
         );
@@ -138,6 +141,7 @@ class LoginFormSection extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final safeAreaTop = MediaQuery.of(context).padding.top;
     final brandingHeight = (screenHeight - safeAreaTop) * 0.30;
+    final l10n = AppLocalizations.of(context)!;
 
     return Positioned(
       top: brandingHeight - 30, // Overlap by 30 pixels
@@ -162,8 +166,8 @@ class LoginFormSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Login Title
-                const Text(
-                  'Login',
+                 Text(
+                  l10n.login,
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -173,8 +177,8 @@ class LoginFormSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 // Subtitle
-                const Text(
-                  'Enter your details to login',
+                  Text(
+                  l10n.loginTitleMsg,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
@@ -184,15 +188,15 @@ class LoginFormSection extends StatelessWidget {
                 const SizedBox(height: 40),
 
                 // User Name Field
-                const Text(
-                  'User Name*',
+                Text(
+                  l10n.userNameTitle,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -201,17 +205,17 @@ class LoginFormSection extends StatelessWidget {
                   ),
                   child: TextFormField(
                     controller: usernameController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
                       ),
                       border: InputBorder.none,
-                      hintText: 'Enter your username',
+                      hintText: l10n.userNameHint,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your username';
+                        return l10n.userNameErr;
                       }
                       return null;
                     },
@@ -220,15 +224,15 @@ class LoginFormSection extends StatelessWidget {
                 const SizedBox(height: 24),
 
                 // Password Field
-                const Text(
-                  'Password*',
+                Text(
+                  l10n.passwordTitle,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -238,17 +242,17 @@ class LoginFormSection extends StatelessWidget {
                   child: TextFormField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15,
                       ),
                       border: InputBorder.none,
-                      hintText: 'Enter your password',
+                      hintText: l10n.passwordHint,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
+                        return l10n.passwordErr;
                       }
                       return null;
                     },
@@ -272,8 +276,8 @@ class LoginFormSection extends StatelessWidget {
                       ),
                       elevation: 0,
                     ),
-                    child: const Text(
-                      'Login',
+                    child: Text(
+                      l10n.login,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

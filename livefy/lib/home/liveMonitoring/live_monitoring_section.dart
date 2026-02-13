@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../streaming_screen.dart';
 import '../liveStreamView/live_stream_view.dart';
 
@@ -13,6 +14,20 @@ class LiveMonitoringSection extends StatefulWidget {
 class _LiveMonitoringSection extends State<LiveMonitoringSection> {
   bool isPlaying = false;
   bool isFront = true;
+
+  void toggleCamera() {
+    setState(() {
+      isFront = !isFront;
+    });
+
+    if (isFront) {
+      print("Font camera selected.");
+      // start player
+    } else {
+      print("Cabin camera selected.");
+      // pause player
+    }
+  }
 
   void togglePlay() {
     setState(() {
@@ -36,7 +51,7 @@ class _LiveMonitoringSection extends State<LiveMonitoringSection> {
     final availableHeight = screenHeight - safeAreaTop - appBarHeight;
     final sectionHeight = availableHeight * 0.25;
 
-    var whepUrl = "http://13.202.239.228:8889/front"; //isFront ? "http://13.202.239.228:8889/front" : "http://13.202.239.228:8889/cabin/";
+    var whepUrl = isFront ? "http://13.202.239.228:8889/front" : "http://13.202.239.228:8889/cabin/";
 
     return GestureDetector(
       onTap: () {
@@ -50,7 +65,7 @@ class _LiveMonitoringSection extends State<LiveMonitoringSection> {
       child: Container(
         height: sectionHeight,
         child: Center(
-          child: isPlaying ? LiveStreamView(streamUrl: whepUrl) : LiveMonitoringSectionCard(onTapStream: togglePlay,),
+          child: isPlaying ? LiveStreamView(streamUrl: whepUrl, toggleCameraCallback: toggleCamera) : LiveMonitoringSectionCard(onTapStream: togglePlay,),
         ),
       ),
     );
@@ -72,6 +87,7 @@ class LiveMonitoringSectionCard extends StatelessWidget {
     final appBarHeight = AppBar().preferredSize.height;
     final availableHeight = screenHeight - safeAreaTop - appBarHeight;
     final sectionHeight = availableHeight * 0.25;
+    final l10n = AppLocalizations.of(context)!;
 
     return GestureDetector(
       onTap: onTapStream,
@@ -88,8 +104,7 @@ class LiveMonitoringSectionCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Tap to start live monitoring',
+              Text(l10n.startLiveMonitoring,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,

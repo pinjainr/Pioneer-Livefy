@@ -151,13 +151,15 @@ String _getTitle(String eventType) {
     case EventType.driverCameraObstructed:
       return "Driver Camera Obstructed";
     case EventType.driverSleepy:
+      return "Driver Sleepy";
     case EventType.driverFatigue:
       return "Driver Fatigue";
     case EventType.driverEatingDrinking:
       return "Driver Eating/Drinking";
     case EventType.driverGazeDistracted:
+      return "Drive Gaze Fixated";
     case EventType.driverGazeFixated:
-      return "";
+      return "Drive Gaze Distracted";
     case EventType.driverPoseDistracted:
       return "Driver Pose Distracted";
     case EventType.driverUsingPhone:
@@ -208,12 +210,12 @@ String _getTitle(String eventType) {
   Widget _buildEventCard({required BuildContext context, required RecentEvent event}) {
     return GestureDetector(
       onTap: () {
-        if (event.presignedUrl?.front != null && event.presignedUrl!.front.isNotEmpty) {
+        if (event.presignedUrl!= null) {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => EventVideoPlayerScreen(
-                videoUrl: event.presignedUrl!.front,
+                videoUrls: event.presignedUrl!,
               ),
             ),
           );

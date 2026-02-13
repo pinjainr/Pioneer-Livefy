@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/services.dart';
 
+import '../../models/recentEvent/RecentEvent.dart';
+
 class EventVideoPlayerScreen extends StatefulWidget {
-  final String videoUrl;
+  final PresignedUrl videoUrls;
 
   const EventVideoPlayerScreen({
     super.key,
-    required this.videoUrl,
+    required this.videoUrls,
   });
 
   @override
@@ -19,6 +22,28 @@ class _EventVideoPlayerScreenState extends State<EventVideoPlayerScreen> {
   bool _isLoading = true;
   bool _hasError = false;
   String? _errorMessage;
+
+  bool isFront = true;
+
+  void toggleCamera() {
+    setState(() {
+      isFront = !isFront;
+    });
+    if (isFront) {
+      print("Front camera selected.");
+    } else {
+      print("Cabin camera selected.");
+    }
+    // Re-initialize player with the other URL
+    _controller?.dispose();
+    _controller = null;
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+      _errorMessage = null;
+    });
+    _initializePlayer();
+  }
 
   @override
   void initState() {
@@ -33,12 +58,34 @@ class _EventVideoPlayerScreenState extends State<EventVideoPlayerScreen> {
     });
   }
 
+  bool _isValidUrl(String? url) {
+    return url != null && url.trim().isNotEmpty;
+  }
+
   void _initializePlayer() async {
     try {
-      print('Initializing video player with URL: ${widget.videoUrl}');
-      
+      final String? frontUrl = widget.videoUrls.front;
+      final String? cabinUrl = widget.videoUrls.cabin;
+      final String? selectedUrl = isFront ? frontUrl : cabinUrl;
+
+      if (!_isValidUrl(selectedUrl)) {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+            _hasError = true;
+            _errorMessage = isFront
+                ? 'Front camera video URL is not available.'
+                : 'Cabin camera video URL is not available.';
+          });
+        }
+        return;
+      }
+
+      final String url = selectedUrl!;
+      print('Initializing video player with URL: $url');
+
       _controller = VideoPlayerController.networkUrl(
-        Uri.parse(widget.videoUrl),
+        Uri.parse(url),
         videoPlayerOptions: VideoPlayerOptions(
           mixWithOthers: false,
         ),
@@ -142,11 +189,29 @@ class _EventVideoPlayerScreenState extends State<EventVideoPlayerScreen> {
                   ),
                 )
               : _controller != null && _controller!.value.isInitialized
-                  ? Center(
-                      child: AspectRatio(
-                        aspectRatio: _controller!.value.aspectRatio,
-                        child: VideoPlayer(_controller!),
-                      ),
+                  ? Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(
+                          child: AspectRatio(
+                            aspectRatio: _controller!.value.aspectRatio,
+                            child: VideoPlayer(_controller!),
+                          ),
+                        ),
+                        // Toggle Camera button - bottom left (similar to LiveStreamView)
+                        Positioned(
+                          bottom: 16,
+                          left: 16,
+                          child: IconButton(
+                            onPressed: toggleCamera,
+                            icon: SvgPicture.asset(
+                              'assets/svgs/toggleCam.svg',
+                              width: 32,
+                              height: 32,
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   : const Center(
                       child: CircularProgressIndicator(color: Colors.white),
